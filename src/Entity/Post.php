@@ -47,6 +47,12 @@ class Post
      */
     private $created_at;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="posts")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +126,18 @@ class Post
     public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getUser(): ?utilisateur
+    {
+        return $this->user;
+    }
+
+    public function setUser(?utilisateur $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
