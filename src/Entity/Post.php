@@ -4,8 +4,12 @@ namespace App\Entity;
 
 use App\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
+ * @ORM\Entity
+ * @Vich\Uploadable
  * @ORM\Entity(repositoryClass=PostRepository::class)
  */
 class Post
@@ -35,15 +39,21 @@ class Post
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $auteur;
+   // private $auteur;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $image;
+/**
+     * @Vich\UploadableField(mapping="product_images", fileNameProperty="image")
+     * @var File
+     */
 
+    private $imageFile;
     /**
      * @ORM\Column(type="datetime")
+     * @var \DateTime
      */
     private $created_at;
 
@@ -52,6 +62,10 @@ class Post
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    public function __construct(){
+        $this->created_at = new \Datetime();//on creer un constructeur pour instancier l'heure actuelle
+    }
 
     public function getId(): ?int
     {
@@ -93,8 +107,8 @@ class Post
 
         return $this;
     }
-
-    public function getAuteur(): ?string
+//on supprime l'auteur
+   /* public function getAuteur(): ?string
     {
         return $this->auteur;
     }
@@ -104,7 +118,7 @@ class Post
         $this->auteur = $auteur;
 
         return $this;
-    }
+    }*/
 
     public function getImage(): ?string
     {
@@ -140,5 +154,15 @@ class Post
         $this->user = $user;
 
         return $this;
+    }
+
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
     }
 }

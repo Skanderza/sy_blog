@@ -33,7 +33,8 @@ class PostController extends AbstractController
         //var_dump($this->getUser());die;
         // ici on ajoute un if pour l'autentification
         if(!$this->getUser()){
-            die("Merci de bien vouloir vous connecter pour acceder à cette page");
+            $this->addFlash("ko", "Merci de bien vouloir vous connecter ");
+            return $this->redirectToRoute('post_index'); 
         } 
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
@@ -41,8 +42,11 @@ class PostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $post->setUser($this->getUser());
             $entityManager->persist($post);
             $entityManager->flush();
+
+            $this->addFlash("success", "Nouveau post Felicitation!");
 
             return $this->redirectToRoute('post_index');
         }

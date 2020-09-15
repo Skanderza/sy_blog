@@ -1,15 +1,35 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-        <link rel="stylesheet" href=" {{ asset('css/bootstrap.min.css') }} " >
-    {% endblock %}
-    </head>
-    <body>
-    {% block header %}Je suis dans le block header{% endblock %}
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
-</html>
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>{% block title %}Welcome!{% endblock %}</title>
+            {% block stylesheets %}
+            <link rel="stylesheet" href=" {{ asset('css/bootstrap.min.css') }} " >
+        {% endblock %}
+        </head>
+        <body>
+        {% block header %}Je suis dans le block header{% endblock %}
+            {#on ajoute une alert avec le flashes#}
+            {% block message %}
+              {% for message in app.flashes('ko') %}
+               <div class="alert alert-danger" role="alert">
+            {{ message }}
+            </div>
+           {% endfor %}
+           
+            {% for message in app.flashes('success') %}
+               <div class="alert alert-success" role="alert">
+               <img src="https://i.gifer.com/69GZ.gif">
+            {{ message }}
+            </div>
+           {% endfor %}
+            {% endblock %}
+            
+                 
+          
+            {% block body %}
+               <hr>Je suis le block Body dans base.html.twig</hr>
+            {% endblock %}
+            {% block javascripts %}{% endblock %}
+        </body>
+    </html>

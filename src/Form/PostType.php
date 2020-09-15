@@ -15,7 +15,9 @@ class PostType extends AbstractType
             ->add('titre')
             ->add('resume')
             ->add('contenue')
-            ->add('auteur')
+            ->add('created_at')
+            //on supprime auteur
+            //->add('auteur')
             ->add('image')
             ->add('created_at')
         ;

@@ -34,7 +34,12 @@ class RegistrationController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
+            
             $entityManager->flush();
+            $this->addFlash("success", "Nouveau compte creer!");
+
+
+            return $this->redirectToRoute('post_index');
             // do anything else you need here, like send an email
 
             return $guardHandler->authenticateUserAndHandleSuccess(
@@ -42,7 +47,7 @@ class RegistrationController extends AbstractController
                 $request,
                 $authenticator,
                 'main' // firewall name in security.yaml
-            );var_dump('$user');die;
+            );
         }
 
         return $this->render('registration/register.html.twig', [
